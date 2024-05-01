@@ -1,47 +1,63 @@
-#Selection Sort Program: a=[] n=int(input("enter 
-the total number elements:")) for i in range(n): 
-a.append(int(input("enter the value %i:"%(i+1)))) 
-print("Unsorted Array:") for 
-i in range(len(a)): 
-print(a[i],end=" ") for 
-i in range(len(a)): 
-min_ind=i for j in 
-range(i+1,len(a)): 
-if(a[min_ind]>a[j]): 
-min_ind=j 
-a[i],a[min_ind]=a[min_ind],a[i] 
-print("\n Sorted Array:") 
-for i in range(len(a)): 
-print(a[i],end=" ") 
+def selection_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        min_index = i
+        for j in range(i + 1, n):
+            if arr[j] < arr[min_index]:
+                min_index = j
+        arr[i], arr[min_index] = arr[min_index], arr[i]
+
+    return arr
+
+if __name__ == "__main__":
+    n = int(input("Enter the total number of elements: "))
+    elements = []
+    for i in range(n):
+        elements.append(int(input("Enter the value %i: " % (i + 1))))
+
+    print("Unsorted Array:", elements)
+    sorted_array = selection_sort(elements)
+    print("Sorted Array:", sorted_array)
 
 
-#Prim’s Minimal Spanning Tree Program: graph=[] 
-n=int(input("enter the total number of nodes:")) 
-for i in range(n): a=[] for j in range(n): 
-a.append(int(input("enter value of %i to %i"%(i+1,j+1)))) 
-graph.append(a) for 
-i in range(n): 
-for j in range(n): 
-print("distance from %i to %i"%(i+1,j+1),graph[i][j]) 
-print() 
-def prims_algorithm(graph): 
-N = len(graph) inf = 
-float('inf') 
-selected_node = [0]*N 
-no_edge = 0 
-selected_node[0] = True 
-print("Edge : Weight") 
-while(no_edge < N - 1): 
-minimum = inf x = 
-0 y = 0 for i in 
-range(N): 
-if selected_node[i]: 
-for j in range(N): 
-if ((not selected_node[j]) and graph[i][j]): 
-if minimum > graph[i][j]: 
-minimum = 
-graph[i][j] x = i y 
-= j 
-print(str(x+1) + " - " + str(y+1) + " : " + str(graph[x][y])) 
-selected_node[y] = True no_edge += 1 
-prims_algorithm(graph) 
+
+def prims_algorithm(graph):
+    N = len(graph)
+    inf = float('inf')
+    selected_node = [0] * N
+    no_edge = 0
+    selected_node[0] = True
+    print("Edge : Weight")
+    while no_edge < N - 1:
+        minimum = inf
+        x = 0
+        y = 0
+        for i in range(N):
+            if selected_node[i]:
+                for j in range(N):
+                    if not selected_node[j] and graph[i][j]:
+                        if minimum > graph[i][j]:
+                            minimum = graph[i][j]
+                            x = i
+                            y = j
+        print(str(x + 1) + " - " + str(y + 1) + " : " + str(graph[x][y]))
+        selected_node[y] = True
+        no_edge += 1
+
+if __name__ == "__main__":
+    n = int(input("Enter the total number of nodes: "))
+    graph = []
+    for i in range(n):
+        a = []
+        for j in range(n):
+            a.append(int(input("Enter value of %i to %i: " % (i + 1, j + 1))))
+        graph.append(a)
+
+    print("\nDistance Matrix:")
+    for i in range(n):
+        for j in range(n):
+            print("Distance from %i to %i: %s" % (i + 1, j + 1, graph[i][j]))
+        print()
+
+    prims_algorithm(graph)
+
